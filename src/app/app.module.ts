@@ -14,6 +14,14 @@ import { DetalleComponent } from "./ingreso-egreso/detalle/detalle.component";
 import { FooterComponent } from "./shared/footer/footer.component";
 import { NavbarComponent } from "./shared/navbar/navbar.component";
 import { SidebarComponent } from "./shared/sidebar/sidebar.component";
+import { FormsModule } from "@angular/forms";
+
+// FireStore
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+// Environment
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -28,7 +36,13 @@ import { SidebarComponent } from "./shared/sidebar/sidebar.component";
     NavbarComponent,
     SidebarComponent
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule,
+            AppRoutingModule,
+            FormsModule,
+            AngularFireModule.initializeApp(environment.firebase),
+            AngularFirestoreModule,
+            AngularFireAuthModule,
+            AngularFireAuthModule],
   providers: [],
   bootstrap: [AppComponent]
 })
