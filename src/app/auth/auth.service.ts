@@ -10,7 +10,7 @@ import { ActivarLoadingAction, DesactivarLoadingAction } from '../shared/ui.acti
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
-import { SetUserAction } from './auth.actions';
+import { SetUserAction, UnsetUserAction } from './auth.actions';
 import { Subscription } from 'rxjs';
 
 
@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
 export class AuthService {
 
   private userSubscription: Subscription = new Subscription();
+  private usuario: User;
 
   constructor(private afAuth: AngularFireAuth,
     private router: Router,
@@ -34,9 +35,10 @@ export class AuthService {
         this.userSubscription = this.afDB.doc(`${fbUser.uid}/usuario`).valueChanges().subscribe((userObj: any) => {
           const newUser = new User(userObj);
           this.store.dispatch(new SetUserAction(newUser));
-          console.log(newUser);
+          this.usuario = newUser;
         });
       } else {
+        this.usuario = null;
         this.userSubscription.unsubscribe();
       }
     });
@@ -90,6 +92,7 @@ export class AuthService {
 
   logOut() {
     this.afAuth.auth.signOut();
+    this.store.dispatch(new UnsetUserAction());
     this.router.navigate(['/login']);
   }
 
@@ -104,6 +107,9 @@ export class AuthService {
     );
   }
 
+  getUsuario() {
+    return { ...this.usuario };
+  }
 
 
 }
