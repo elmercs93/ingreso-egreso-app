@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
 import { Subscription } from 'rxjs';
 import { IngresoEgreso } from '../ingreso-egreso.model';
 import { ChartType } from 'chart.js';
 import { Label, MultiDataSet } from 'ng2-charts';
+import { AppState } from '../ingreso-egreso.reducer';
 
 @Component({
   selector: 'app-estadistica',
